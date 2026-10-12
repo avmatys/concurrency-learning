@@ -11,9 +11,11 @@ public class Main {
         Server server = new Server(8080); 
         ServletContextHandler context = new ServletContextHandler(); 
         context.setContextPath("/"); 
-        context.addServlet( new ServletHolder(new StatelessFactorizerServlet()), "/21" ); 
+        context.addServlet( new ServletHolder(new StatelessFactorizerServlet()), "/stateless" ); 
+        context.addServlet( new ServletHolder(new UnsafeCountServlet()), "/unsafecount" ); 
         server.setHandler(context); 
         server.start(); 
-        System.out.println("http://localhost:8080/21");
+        System.out.println("http://localhost:8080/stateless");
+        System.out.println("http://localhost:8080/unsafecount");
     }
 }
