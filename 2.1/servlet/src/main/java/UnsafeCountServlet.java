@@ -4,16 +4,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import java.math.BigInteger;
 
 public class UnsafeCountServlet extends HttpServlet {
 
-    private long count = 0;
+    //private long count = 0;
+    private AtomicLong count = new AtomicLong(0);
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        count++; // Unsafe
-        response.getWriter().println("Count: " + count);
+        //count++; // Unsafe
+        count.incrementAndGet();
+        response.getWriter().println("Count: " + count.get());
         String value = request.getParameter("number");
         if (value == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing number parameter");
